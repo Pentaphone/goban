@@ -18,7 +18,7 @@ h1 {
 }
 
 .spacing {
-  width: 10px;
+  width: 20px;
 }
 
 
@@ -69,6 +69,18 @@ select:hover {
   height: 1rem;
   margin-bottom: 20px;
 
+  display: flex;
+  flex-direction: row;
+
   font-weight: bold
+}
+
+#captures {
+  width: min(90vw, 500px);
+  height: 1rem;
+  margin-bottom: 20px;
+
+  display: flex;
+  justify-content: space-evenly;
 }
 

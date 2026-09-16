@@ -6,13 +6,19 @@ info.innerHTML = "";
 
 const board = document.getElementById("board");
 
+const capturesDisplay = document.getElementById("captures")
+
 let   size = Number(sizeSelector.value);
 let   center;
 let   grid = newGrid();
 
+let   blackStonesCaptured = 0;
+let   whiteStonesCaptured = 0;
+
 let   lastMove = null;
-let   currentPlayer = "black";
 let   gameOver = false;
+
+let   currentPlayer = "black";
 
 
 //### Gameplay
@@ -75,12 +81,19 @@ function endGame() {
 newGameButton.onclick = () => {
   size = Number(sizeSelector.value);
   grid = newGrid();
+
   info.innerHTML = "";
+  captures.innerHTML = "";
   setGameControlMode("game");
+  
   drawBoard();
 
   gameOver = false;
+  blackStonesCaptured = 0;
+  whiteStonesCaptured = 0;
+  lastMove = null;
   passed = false;
+
   currentPlayer = "black";
 };
 

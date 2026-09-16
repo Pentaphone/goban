@@ -5,7 +5,7 @@ function newGrid() {
   const grid = Array.from({length: size}, createRow);
 
   center = [Math.floor(size / 2), Math.floor(size / 2)];
-  
+
   return grid;
 }
 
@@ -75,15 +75,24 @@ function capture(x, y) {
   for (const [nx, ny] of getNeighbors(x, y)) {
     if (grid[ny][nx] !== opponent) {continue}
 
-    if (isCaptured(nx, ny)) {captureGroup(nx, ny)}
+    if (isCaptured(nx, ny)) {
+    	const capturedStones = captureGroup(nx, ny);
+    	if (opponent === "black") {blackStonesCaptured += capturedStones}
+    	else if (opponent === "white") {whiteStonesCaptured += capturedStones}
+    
+    	capturesDisplay.innerHTML = 
+    		`○ captured: ${blackStonesCaptured}
+    		 <div class="spacing"></div>
+				 ● captured: ${whiteStonesCaptured}` 
+    }
 	}
 }
 
 function captureGroup(x, y) {
-  const group = getGroup(x, y);
+	const group = getGroup(x, y);
+
   for (const [gx, gy] of group) {
     grid[gy][gx] = null;
   }
-
   return group.length;
 }
