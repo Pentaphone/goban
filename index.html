@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="UTF-8">
+
+  <title>Go</title>
+
+  <link rel="stylesheet" href="style/style.css">
+  <link rel="stylesheet" href="style/control_modes.css">
+  <link rel="stylesheet" href="style/board.css">
+  <link rel="stylesheet" href="style/stones.css">
+
+</head>
+<body>
+  <h1>Go</h1>
+
+  <div class="controls" id ="setup">
+  <select id="boardSize">
+    <option value="9">9 × 9</option>
+    <option value="13">13 × 13</option>
+    <option value="19" selected>19 × 19</option>
+  </select>
+  <button id="new">New Game</button>
+  </div>
+
+  <div id="info">_</div>
+
+  <div id="board"></div>
+
+  <div id ="gameControls">
+    <div class="controls mode" id="gameMode">
+    <button id="pass">Pass</button>
+    <button id="resign">Resign</button>
+    </div>
+
+    <div class="controls mode" id="resignMode">
+    Resign?
+    <button id="resignCancel">No</button>
+    <button id="resignConfirm">Yes</button>
+    </div>
+
+    <div class="controls mode" id="reviewMode">
+    </div>
+
+  </div>
+
+</body>
+
+<script src="script/lib/write.js"></script>
+
+<script src="script/board.js"></script>
+<script src="script/stones.js"></script>
+<script src="script/controls.js"></script>
+<script src="script/gameplay_components.js"></script>
+<script src="script/main.js"></script>
