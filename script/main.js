@@ -1,4 +1,4 @@
-//# Go
+//# Goban
 
 //### Constants, Variables
 const info = document.getElementById("info");
@@ -19,6 +19,7 @@ let   lastMove = null;
 let   gameOver = false;
 
 let   currentPlayer = "black";
+const theme = "chang-an";
 
 
 //### Gameplay
@@ -44,6 +45,7 @@ function placeStone(x, y) {
 
 function nextPlayer() {
   currentPlayer = (currentPlayer === "black")? "white": "black";
+  setGameControlMode("game");
 }
 
 
@@ -78,15 +80,14 @@ function endGame() {
 
 
 //### New Game
-newGameButton.onclick = () => {
+function newGame() {
   size = Number(sizeSelector.value);
   grid = newGrid();
+  drawBoard();
 
   info.innerHTML = "";
   captures.innerHTML = "";
   setGameControlMode("game");
-  
-  drawBoard();
 
   gameOver = false;
   blackStonesCaptured = 0;
@@ -95,6 +96,17 @@ newGameButton.onclick = () => {
   passed = false;
 
   currentPlayer = "black";
-};
+}
+
+newGameButton.onclick = newGame;
+
+
+//### Theme
+function setTheme(theme) {
+  for (const sheet of document.querySelectorAll("link[data-theme]")) {
+    sheet.disabled = sheet.dataset.theme !== theme;
+  }
+}
+setTheme(theme);
 
 drawBoard();

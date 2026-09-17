@@ -1,0 +1,35 @@
+/* Stones */
+
+.stone {
+  width: 85%;
+  height: 85%;
+  border-radius: 50%;
+
+  border: 1px solid #eeeeee;
+
+  z-index: 2;
+
+  box-shadow:
+    2px 3px 4px rgba(0, 0, 0, 0.4);
+}
+
+.black {background: #111111;}
+.white {background: #eeeeee}
+
+.preview {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.lastMoveMark {
+  position: absolute;
+  width: 28%;
+  height: 28%;
+
+  background: #45A3DE;
+
+  box-sizing: border-box;
+  z-index: 3;
+
+  pointer-events: none;
+}
