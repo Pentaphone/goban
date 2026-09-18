@@ -21,7 +21,7 @@ function drawBoard() {
 	  }
 
 	  intersection.addEventListener("click", () => {
-	    placeStone(x, y)
+	    if (! gameOver) {placeStone(x, y)}
 	  });
 
 	  intersection.addEventListener("mouseenter", () => {

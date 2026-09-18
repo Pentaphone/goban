@@ -24,7 +24,8 @@ function drawStone(x, y, color) {
 }
 
 function showPreview(x, y) {
-  if (grid[y][x] !== null) {return;}
+  if (grid[y][x] !== null) {return}
+  if (! isLegal(x, y)) {return}
   hidePreview();
 
   const index = y * size + x;

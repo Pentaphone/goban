@@ -1,9 +1,5 @@
 /* Control modes */
 
-.mode {
-  display: none;
-}
+.mode {display: none}
 
-.mode.shown {
-  display: flex;
-}
+.mode.shown {display: flex}

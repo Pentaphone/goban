@@ -1,5 +1,12 @@
 //# Goban
 
+//### Config
+const koRule = simpleKo;         // simpleKo | positionalKo | null
+const allowSelfCapture = false;  // false | true
+
+const theme = "kyoto";
+
+
 //### Constants, Variables
 const info = document.getElementById("info");
 info.innerHTML = "";
@@ -12,31 +19,30 @@ let   size = Number(sizeSelector.value);
 let   center;
 let   grid = newGrid();
 
+let   positionHistory = [copyGrid(grid)];
 let   blackStonesCaptured = 0;
 let   whiteStonesCaptured = 0;
 
-let   lastMove = null;
 let   gameOver = false;
 
 let   currentPlayer = "black";
-const theme = "chang-an";
 
 
 //### Gameplay
 function placeStone(x, y) {
-  if (gameOver) {return}
-  if (grid[y][x] !== null) {return}
+  if (! isLegal(x, y)) {return}
 
   removeLastMove();
 
   grid[y][x] = currentPlayer;
   capture(x, y);
+  selfCapture(x, y);
+  positionHistory.push(copyGrid(grid));
 
   drawStones();
   markLastMove(x, y)
   hidePreview();
 
-  lastMove = {x, y};
   passed = false;
   info.innerHTML = "";
 
@@ -90,9 +96,9 @@ function newGame() {
   setGameControlMode("game");
 
   gameOver = false;
+  positionHistory = [copyGrid(grid)];
   blackStonesCaptured = 0;
   whiteStonesCaptured = 0;
-  lastMove = null;
   passed = false;
 
   currentPlayer = "black";
