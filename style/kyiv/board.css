@@ -9,6 +9,7 @@
 
   background: #131313;
 
+  border: 0;
   box-sizing: border-box;
 }
 
@@ -38,6 +39,9 @@
   background: #eeeeee;
 
   z-index: 0;
+}
+.intersection::after {
+   display: none;
 }
 
 .hoshi {  /* (star points) */

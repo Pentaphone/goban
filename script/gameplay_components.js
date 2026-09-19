@@ -108,7 +108,7 @@ function capture(x, y, count=true) {
 
 function selfCapture(x, y, count=true) {
   if (grid[y][x] !== currentPlayer) {return}
-  if (allowSelfCapture && isCaptured(x, y)) {
+  if (isCaptured(x, y)) {
     const selfCapturedStones = captureGroup(x, y)
     if (count) {addCaptures(selfCapturedStones, currentPlayer)}
   }
@@ -147,9 +147,10 @@ function simpleKo() {
 }
 
 function positionalKo() {
-  return positionHistory.some(
-    oldPosition => gridsEqual(grid, oldPosition)
-  );
+  for (position of positionHistory) {
+    if (gridsEqual(grid, position)) {return true}
+  }
+  return false;
 }
 
 function isLegal(x, y) {

@@ -6,7 +6,9 @@ function drawStones() {
 
     const intersection = getIntersection(x, y);
     const stone = intersection.querySelector(".stone");
-    if (stone) {stone.remove();}
+    if (stone) {stone.remove()}
+
+    removeLastMoveMark();
 
     const color = grid[y][x];
     if (color !== null) {
@@ -44,9 +46,9 @@ function hidePreview() {
   if (preview) {preview.remove()}
 }
 
-function removeLastMove() {
-  const marker = board.querySelector(".lastMoveMark");
-  if (marker) {marker.remove()}
+function removeLastMoveMark() {
+  const mark = board.querySelector(".lastMoveMark");
+  if (mark) {mark.remove()}
 }
 
 function markLastMove(x, y) {

@@ -21,11 +21,11 @@ function drawBoard() {
 	  }
 
 	  intersection.addEventListener("click", () => {
-	    if (! gameOver) {placeStone(x, y)}
+	    if (programMode === "play") {placeStone(x, y)}
 	  });
 
 	  intersection.addEventListener("mouseenter", () => {
-	    if (! gameOver) {showPreview(x, y)}
+	    if (programMode === "play") {showPreview(x, y)}
 	  });
 
 	  intersection.addEventListener("mouseleave", () =>

@@ -36,8 +36,11 @@ button {
 
   cursor: pointer;
 }
-button:hover {
+button:enabled:hover {
   background: #333;
+}
+button:disabled {
+  color: gray;
 }
 
 select {

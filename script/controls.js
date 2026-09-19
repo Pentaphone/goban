@@ -19,7 +19,13 @@ const resignButton = document.getElementById("resign");
 const resignCancelButton = document.getElementById("resignCancel");
 const resignConfirmButton = document.getElementById("resignConfirm");
 
-// Modes
+// Review Mode
+const skipToStartButton = document.getElementById("start");
+const prevMoveButton = document.getElementById("prev");
+const nextMoveButton = document.getElementById("next");
+const skipToEndButton = document.getElementById("end");
+
+// Mode Control
 let gameControlMode = null;
 
 function setGameControlMode(mode) {
