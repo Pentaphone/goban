@@ -5,7 +5,7 @@ const newGameButton = document.getElementById("new");
 
 
 //### Game Controls
-const gameControlModes = {
+const gameMenuModes = {
   game: document.getElementById("gameMode"),
   resign: document.getElementById("resignMode"),
   review: document.getElementById("reviewMode"),
@@ -26,14 +26,14 @@ const nextMoveButton = document.getElementById("next");
 const skipToEndButton = document.getElementById("end");
 
 // Mode Control
-let gameControlMode = null;
+let gameMenu = null;
 
-function setGameControlMode(mode) {
-	if (gameControlMode !== null) {
-		gameControlModes[gameControlMode].classList.remove("shown");
+function setGameMenu(mode) {
+	if (gameMenu !== null) {
+		gameMenuModes[gameMenu].classList.remove("shown");
 	}
-	gameControlMode = mode;
-	gameControlModes[mode].classList.add("shown");
+	gameMenu = mode;
+	gameMenuModes[mode].classList.add("shown");
 }
 
-setGameControlMode("game");
+setGameMenu("game");

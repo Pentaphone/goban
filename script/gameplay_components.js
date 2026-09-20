@@ -104,15 +104,27 @@ function capture(x, y, count=true) {
     if (isCaptured(nx, ny)) {
     	const capturedStones = captureGroup(nx, ny);
       if (count) {addCaptures(capturedStones, opponent)}
-} } }
+    }
+  }
+  if (count) {
+    captureHistory.push({
+      black: blackStonesCaptured, white: whiteStonesCaptured
+    });
+  }
+}
 
 function selfCapture(x, y, count=true) {
   if (grid[y][x] !== currentPlayer) {return}
   if (isCaptured(x, y)) {
     const selfCapturedStones = captureGroup(x, y)
-    if (count) {addCaptures(selfCapturedStones, currentPlayer)}
   }
-}
+  if (count) {
+    addCaptures(selfCapturedStones, currentPlayer);
+    captureHistory.push({
+      black: blackStonesCaptured, white: whiteStonesCaptured
+    });
+  }
+} 
 
 function captureGroup(x, y) {
   const group = getGroup(x, y);
@@ -130,10 +142,10 @@ function addCaptures(capturedStones, color) {
   else if (color === "white") {
     whiteStonesCaptured += capturedStones
   }
-  capturesDisplay.innerHTML = 
-    `○ captured: ${blackStonesCaptured}
-     <div class="spacing"></div>
-     ● captured: ${whiteStonesCaptured}`
+  printCaptures({
+    black: blackStonesCaptured,
+    white: whiteStonesCaptured
+  });
 }
 
 

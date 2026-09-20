@@ -26,11 +26,13 @@ function drawBoard() {
 
 	  intersection.addEventListener("mouseenter", () => {
 	    if (programMode === "play") {showPreview(x, y)}
+	    coordsDisplay.innerHTML = getCoords(x, y);
 	  });
 
-	  intersection.addEventListener("mouseleave", () =>
-	    hidePreview()
-	  );
+	  intersection.addEventListener("mouseleave", () => {
+	    hidePreview();
+	    coordsDisplay.textContent = "";
+	  });
 
 	  board.appendChild(intersection);
 } }}

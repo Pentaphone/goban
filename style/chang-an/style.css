@@ -18,7 +18,7 @@ h1 {
 }
 
 .spacing {
-  width: 20px;
+  width: 20px
 }
 
 
@@ -78,12 +78,21 @@ select:hover {
   font-weight: bold
 }
 
-#captures {
+#captures-coords {
   width: min(90vw, 500px);
   height: 1rem;
   margin-bottom: 20px;
 
   display: flex;
   justify-content: space-evenly;
+}
+
+#blackStones, #whiteStones {
+  width: 100 px;
+}
+
+#coords {
+  width: 32px;
+  text-align: center
 }
 

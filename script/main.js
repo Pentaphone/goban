@@ -4,16 +4,17 @@
 const koRule = positionalKo;         // simpleKo | positionalKo | null
 const allowSelfCapture = false;  // false | true
 
-const theme = "kyiv";
+const theme = "kyoto";
 
 
 //### Constants, Variables
 const info = document.getElementById("info");
-info.innerHTML = "";
 
 const board = document.getElementById("board");
 
-const capturesDisplay = document.getElementById("captures")
+const blackStonesCaptDisplay = document.getElementById("blackStones")
+const whiteStonesCaptDisplay = document.getElementById("whiteStones")
+const coordsDisplay = document.getElementById("coords")
 
 let   programMode = "play";
 
@@ -25,6 +26,7 @@ let   moveHistory = [];
 let   positionHistory = [copyGrid(grid)];
 let   blackStonesCaptured = 0;
 let   whiteStonesCaptured = 0;
+let   captureHistory = [{black: 0, white: 0}];
 
 let   move = 0;
 let   position = 0;
@@ -43,10 +45,10 @@ function placeStone(x, y) {
   markLastMove(x, y)
   hidePreview();
 
-  positionHistory.push(copyGrid(grid));
   moveHistory.push({
     player:currentPlayer, type:"play", place:[x, y],
   })
+  positionHistory.push(copyGrid(grid));
 
   move += 1;
   passed = false;
@@ -57,7 +59,7 @@ function placeStone(x, y) {
 
 function nextPlayer() {
   currentPlayer = (currentPlayer === "black")? "white": "black";
-  setGameControlMode("game");
+  setGameMenu("game");
 }
 
 
@@ -81,8 +83,8 @@ passButton.onclick = () => {
   }
 }
 
-resignButton.onclick = () => {setGameControlMode("resign")}
-resignCancelButton.onclick = () => {setGameControlMode("game")}
+resignButton.onclick = () => {setGameMenu("resign")}
+resignCancelButton.onclick = () => {setGameMenu("game")}
 
 resignConfirmButton.onclick = () => {
   moveHistory.push({
@@ -100,13 +102,15 @@ function newGame() {
   drawBoard();
 
   info.innerHTML = "";
-  captures.innerHTML = "";
-  setGameControlMode("game");
+  blackStonesCaptDisplay.innerHTML = "";
+  whiteStonesCaptDisplay.innerHTML = "";
+  setGameMenu("game");
 
   programMode = "play";
   move = 0;
   moveHistory = [{type:"start"}];
   positionHistory = [copyGrid(grid)];
+  captureHistory = [{black: 0, white: 0}];
   blackStonesCaptured = 0;
   whiteStonesCaptured = 0;
   passed = false;
@@ -115,6 +119,25 @@ function newGame() {
 }
 
 newGameButton.onclick = newGame;
+
+
+//### Display
+info.innerHTML = "";
+
+blackStonesCaptDisplay.innerHTML = "";
+whiteStonesCaptDisplay.innerHTML = "";
+
+function printCaptures(captures) {
+  blackStonesCaptDisplay.innerHTML = `○ captured: ${captures.black}`;
+  whiteStonesCaptDisplay.innerHTML = `● captured: ${captures.white}`;
+}
+
+function getCoords(x, y) {
+  const cols = "ABCDEFGHJKLMNOPQRST";
+  const col = cols[x];
+  const row = size - y;
+  return `${col}${row}`;
+}
 
 
 //### Theme

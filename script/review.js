@@ -2,9 +2,11 @@
 
 function review() {
   programMode = "review";
-  setGameControlMode("review");
+  setGameMenu("review");
 
   updateButtons();
+
+  console.log(captureHistory)
 }
 
 prevMoveButton.onclick = () => {
@@ -36,14 +38,17 @@ function showMove(moveIndex) {
   drawStones();
   removeLastMoveMark();
 
-  info.innerHTML = `Move ${moveIndex}`;
-
   if (moveToShow.type === "play") {
   	const [x, y] = moveToShow.place;
     markLastMove(x, y);
   }
    if (moveToShow.type === "pass") {
   	info.innerHTML += ` - ${capitalize(player)} passed`;
+  }
+
+  info.innerHTML = `Move ${moveIndex}`;
+  if (blackStonesCaptured || whiteStonesCaptured) {
+  	printCaptures(captureHistory[positionIndex]);
   }
 
   updateButtons();
