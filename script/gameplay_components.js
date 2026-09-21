@@ -135,17 +135,15 @@ function captureGroup(x, y) {
   return group.length;
 }
 
-function addCaptures(capturedStones, color) {
-  if (color === "black") {
-    blackStonesCaptured += capturedStones
+function addCaptures(stones, color, updateDisplay=true) {
+  if (color === "black") {blackStonesCaptured += stones;}
+  else if (color === "white") {whiteStonesCaptured += stones;}
+  if (updateDisplay) {
+    printCaptures({
+      black: blackStonesCaptured,
+      white: whiteStonesCaptured,
+    });
   }
-  else if (color === "white") {
-    whiteStonesCaptured += capturedStones
-  }
-  printCaptures({
-    black: blackStonesCaptured,
-    white: whiteStonesCaptured
-  });
 }
 
 

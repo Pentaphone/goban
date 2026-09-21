@@ -72,10 +72,8 @@ select:hover {
   height: 1rem;
   margin-bottom: 20px;
 
-  display: flex;
-  flex-direction: row;
-
-  font-weight: bold
+  text-align: center;
+  font-weight: bold;
 }
 
 #captures-coords {
@@ -93,6 +91,6 @@ select:hover {
 
 #coords {
   width: 54px;
-  text-align: center
+  text-align: center;
 }
 

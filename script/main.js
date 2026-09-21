@@ -1,10 +1,11 @@
 //# Goban
 
-//### Config
-const koRule = simpleKo;         // simpleKo | positionalKo | null
-const allowSelfCapture = false;  // false | true
+//### Config  *default*
+const koRule = simpleKo;         // *simpleKo* | positionalKo | null
+const allowSelfCapture = false;  // *false* | true
+const komi = 6.5;                // *6.5*
 
-const coordsStyle = european;    // european | japanese
+const coordsStyle = japanese;    // *european* | japanese
 const theme = "kyoto";
 
 
@@ -28,6 +29,15 @@ let   positionHistory = [copyGrid(grid)];
 let   blackStonesCaptured = 0;
 let   whiteStonesCaptured = 0;
 let   captureHistory = [{black: 0, white: 0}];
+
+let   passed = false;
+let   resignation = false;
+
+let   scoringGrid;
+let   deadStones = new Set();
+let   score = {};
+let   winner = null;
+let   scoreInfo = "";
 
 let   move = 0;
 let   position = 0;
@@ -65,8 +75,6 @@ function nextPlayer() {
 
 
 //### Pass, Resign
-let passed = false;
-
 passButton.onclick = () => {
   moveHistory.push({
     player:currentPlayer, type:"pass",
@@ -81,7 +89,7 @@ passButton.onclick = () => {
     info.innerHTML =
       `${capitalize(currentPlayer)} passed. Game over`;
     move += 1;
-    score();
+    scoreGame();
   }
 }
 
@@ -89,12 +97,14 @@ resignButton.onclick = () => {setGameMenu("resign")}
 resignCancelButton.onclick = () => {setGameMenu("game")}
 
 resignConfirmButton.onclick = () => {
+  resignation = true;
+  winner = (currentPlayer === "black")? "white": "black";
   moveHistory.push({
     player:currentPlayer, type:"resign",
   })
   info.innerHTML = `${capitalize(currentPlayer)} resigned`;
   move += 1;
-  score();
+  scoreGame();
 }
 
 
@@ -117,6 +127,7 @@ function newGame() {
   blackStonesCaptured = 0;
   whiteStonesCaptured = 0;
   passed = false;
+  resignation = false;
 
   currentPlayer = "black";
 }
@@ -135,7 +146,7 @@ function printCaptures(captures) {
   whiteStonesCaptDisplay.innerHTML = `● captured: ${captures.white}`;
 }
 
-function getCoords(x, y) {return coordsStyle(x, y)}
+function getCoords(x, y) {return coordsStyle(x, y);}
 
 
 // Coords Styles

@@ -81,4 +81,8 @@
 }
 
 .territoryMark.black {background: #111111}
-.territoryMark.white {background: #eeeeee}
+.territoryMark.white {
+  background: #eeeeee;
+  border: 1px solid #555;
+
+}

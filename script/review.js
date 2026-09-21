@@ -1,12 +1,17 @@
 //# Review
 
-scoreConfirmButton.onclick = review;
-
 function review() {
   programMode = "review";
   setGameMenu("review");
 
+	scoreInfo =`
+		Black: ${score.black},
+		White: ${score.white} (${score.white - score.komi} + ${score.komi})
+		 – ${capitalize(winner)} wins`;
+  info.innerHTML = scoreInfo;
+
   drawStones();
+  drawDeadStones();
 
   updateButtons();
 }
@@ -47,7 +52,7 @@ function showMove(moveIndex) {
     markLastMove(x, y);
   }
   if (moveToShow.type === "pass") {
-  	info.innerHTML += ` - ${capitalize(player)} passed`;
+  	info.innerHTML += ` – ${capitalize(player)} passed`;
   }
   if (moveToShow.type === "resign") {
   	info.innerHTML = `${capitalize(player)} resigned`;
@@ -56,8 +61,9 @@ function showMove(moveIndex) {
   const isFinalMove = moveIndex === moveHistory.length - 1;
 
   if (isFinalMove) {
+  	drawDeadStones();
   	drawTerritories();
-  	
+  	info.innerHTML += " | " + scoreInfo;
   }
   else {removeTerritoryMarks();}
 

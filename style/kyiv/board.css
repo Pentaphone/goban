@@ -55,3 +55,11 @@
 
   z-index: 1;
 }
+
+.territoryMark.black {
+  border: 1px solid #eeeeee;
+}
+
+.territoryMark.white {
+  border: 1px solid #111111;
+}

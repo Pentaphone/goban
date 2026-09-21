@@ -16,7 +16,7 @@ function drawStones() {
 
 function drawStone(x, y, color) {
   const intersection = getIntersection(x, y);
-
+  
   const stone = document.createElement("div");
   stone.classList.add("stone", color);
   intersection.appendChild(stone);
