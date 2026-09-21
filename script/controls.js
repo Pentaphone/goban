@@ -8,6 +8,7 @@ const newGameButton = document.getElementById("new");
 const gameMenuModes = {
   game: document.getElementById("gameMode"),
   resign: document.getElementById("resignMode"),
+  score: document.getElementById("scoreMode"),
   review: document.getElementById("reviewMode"),
 };
 
@@ -18,6 +19,9 @@ const resignButton = document.getElementById("resign");
 // Resign Mode
 const resignCancelButton = document.getElementById("resignCancel");
 const resignConfirmButton = document.getElementById("resignConfirm");
+
+// Score Mode
+const scoreConfirmButton = document.getElementById("ScoreConfirm");
 
 // Review Mode
 const skipToStartButton = document.getElementById("start");

@@ -1,0 +1,4 @@
+/* Menu Control */
+
+.mode {display: none}
+.mode.shown {display: flex}

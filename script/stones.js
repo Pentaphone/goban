@@ -4,10 +4,7 @@ function drawStones() {
 	for (let y=0; y<size; y+=1) {
   for (let x=0; x<size; x+=1) {
 
-    const intersection = getIntersection(x, y);
-    const stone = intersection.querySelector(".stone");
-    if (stone) {stone.remove()}
-
+    removeStone(x, y);
     removeLastMoveMark();
 
     const color = grid[y][x];
@@ -25,19 +22,24 @@ function drawStone(x, y, color) {
   intersection.appendChild(stone);
 }
 
+function removeStone(x, y) {
+  const intersection = getIntersection(x, y);
+  const stone = intersection.querySelector(".stone");
+  if (stone) {stone.remove()}
+}
+
 function showPreview(x, y) {
   if (grid[y][x] !== null) {return}
   if (! isLegal(x, y)) {return}
   hidePreview();
+  drawPreview(x, y, currentPlayer);
+}
 
-  const index = y * size + x;
-  const intersection = board.children[index];
+function drawPreview(x, y, color, className="preview") {
+  const intersection = getIntersection(x, y);
 
   const preview = document.createElement("div");
-  preview.classList.add(
-    "stone", "preview", currentPlayer
-  );
-
+  preview.classList.add("stone", color, className);
   intersection.appendChild(preview);
 }
 
@@ -46,15 +48,15 @@ function hidePreview() {
   if (preview) {preview.remove()}
 }
 
-function removeLastMoveMark() {
-  const mark = board.querySelector(".lastMoveMark");
-  if (mark) {mark.remove()}
-}
-
 function markLastMove(x, y) {
   const intersection = getIntersection(x, y);
 
-  const marker = document.createElement("div");
-  marker.classList.add("lastMoveMark");
-  intersection.appendChild(marker);
+  const mark = document.createElement("div");
+  mark.classList.add("lastMoveMark");
+  intersection.appendChild(mark);
+}
+
+function removeLastMoveMark() {
+  const mark = board.querySelector(".lastMoveMark");
+  if (mark) {mark.remove()}
 }

@@ -47,7 +47,7 @@ function getNeighbors(x, y) {
 
 function getGroup(x, y) {
   const color = grid[y][x];
-  if (color === null) {return []}
+  if (color === null) {return [];}
 
 	// Floodfill
   const group = [];
@@ -57,10 +57,10 @@ function getGroup(x, y) {
   while (queue.length > 0) {
     const [cx, cy] = queue.pop();
 
-    if (visited[cy][cx]) {continue}
+    if (visited[cy][cx]) {continue;}
     visited[cy][cx] = true;
 
-    if (grid[cy][cx] !== color) {continue}
+    if (grid[cy][cx] !== color) {continue;}
 
     group.push([cx, cy]);
 
@@ -77,8 +77,8 @@ function getLiberties(x, y) {
   const group = getGroup(x, y);
   const liberties = new Set();
 
-  for (const [sx, sy] of group) {
-    for (const [nx, ny] of getNeighbors(sx, sy)) {
+  for (const [gx, gy] of group) {
+    for (const [nx, ny] of getNeighbors(gx, gy)) {
 
       if (grid[ny][nx] === null) {
       	liberties.add(`${nx},${ny}`)}

@@ -21,11 +21,12 @@ function drawBoard() {
 	  }
 
 	  intersection.addEventListener("click", () => {
-	    if (programMode === "play") {placeStone(x, y)}
+	    if (programMode === "play") {placeStone(x, y);}
+	    else if (programMode === "score") {toggleGroup(x, y);}
 	  });
 
 	  intersection.addEventListener("mouseenter", () => {
-	    if (programMode === "play") {showPreview(x, y)}
+	    if (programMode === "play") {showPreview(x, y);}
 	    coordsDisplay.innerHTML = getCoords(x, y);
 	  });
 

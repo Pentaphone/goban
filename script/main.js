@@ -1,9 +1,10 @@
 //# Goban
 
 //### Config
-const koRule = positionalKo;         // simpleKo | positionalKo | null
+const koRule = simpleKo;         // simpleKo | positionalKo | null
 const allowSelfCapture = false;  // false | true
 
+const coordsStyle = european;    // european | japanese
 const theme = "kyoto";
 
 
@@ -35,7 +36,7 @@ let   currentPlayer = "black";
 
 //### Gameplay
 function placeStone(x, y) {
-  if (! isLegal(x, y)) {remove}
+  if (! isLegal(x, y)) {return;}
 
   grid[y][x] = currentPlayer;
   capture(x, y);
@@ -79,7 +80,8 @@ passButton.onclick = () => {
   else {
     info.innerHTML =
       `${capitalize(currentPlayer)} passed. Game over`;
-    review()
+    move += 1;
+    score();
   }
 }
 
@@ -90,8 +92,9 @@ resignConfirmButton.onclick = () => {
   moveHistory.push({
     player:currentPlayer, type:"resign",
   })
-  info.innerHTML = `${capitalize(currentPlayer)} resigned`
-  review();
+  info.innerHTML = `${capitalize(currentPlayer)} resigned`;
+  move += 1;
+  score();
 }
 
 
@@ -132,10 +135,24 @@ function printCaptures(captures) {
   whiteStonesCaptDisplay.innerHTML = `● captured: ${captures.white}`;
 }
 
-function getCoords(x, y) {
+function getCoords(x, y) {return coordsStyle(x, y)}
+
+
+// Coords Styles
+function european(x, y) {
   const cols = "ABCDEFGHJKLMNOPQRST";
   const col = cols[x];
   const row = size - y;
+  return `${col}${row}`;
+}
+
+function japanese(x, y) {
+  const kanjiNumbers = [
+    "一", "二", "三", "四", "五", "六", "七", "八", "九", "十",
+    "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九"
+  ];
+  const col = x + 1;
+  const row = kanjiNumbers[y];
   return `${col}${row}`;
 }
 
@@ -151,3 +168,4 @@ setTheme(theme);
 
 moveHistory.push({type:"start"});
 drawBoard();
+

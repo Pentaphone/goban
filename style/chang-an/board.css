@@ -65,3 +65,20 @@
 
   z-index: 1;
 }
+
+.territoryMark {
+  position: absolute;
+  width: 42%;
+  height: 42%;
+
+  border: 1px solid #111111;
+  border-radius: 0;
+
+  box-sizing: border-box;
+  z-index: 3;
+
+  pointer-events: none;
+}
+
+.territoryMark.black {background: #111111}
+.territoryMark.white {background: #eeeeee}

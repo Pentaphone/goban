@@ -11,10 +11,15 @@
     2px 3px 4px rgba(0, 0, 0, 0.4);
 }
 
-.black {background: #111111}
-.white {background: #eeeeee}
+.stone.black {background: #111111}
+.stone.white {background: #eeeeee}
 
 .preview {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.dead {
   opacity: 0.5;
   pointer-events: none;
 }

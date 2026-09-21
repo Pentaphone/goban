@@ -1,12 +1,14 @@
 //# Review
 
+scoreConfirmButton.onclick = review;
+
 function review() {
   programMode = "review";
   setGameMenu("review");
 
-  updateButtons();
+  drawStones();
 
-  console.log(captureHistory)
+  updateButtons();
 }
 
 prevMoveButton.onclick = () => {
@@ -25,7 +27,7 @@ skipToStartButton.onclick = () => {
 }
 
 skipToEndButton.onclick = () => {
-	move = moveHistory.length - 2;
+	move = moveHistory.length - 1;
 	showMove(move);
 }
 
@@ -38,15 +40,27 @@ function showMove(moveIndex) {
   drawStones();
   removeLastMoveMark();
 
+  info.innerHTML = `Move ${moveIndex}`;
+
   if (moveToShow.type === "play") {
   	const [x, y] = moveToShow.place;
     markLastMove(x, y);
   }
-   if (moveToShow.type === "pass") {
+  if (moveToShow.type === "pass") {
   	info.innerHTML += ` - ${capitalize(player)} passed`;
   }
+  if (moveToShow.type === "resign") {
+  	info.innerHTML = `${capitalize(player)} resigned`;
+  }
 
-  info.innerHTML = `Move ${moveIndex}`;
+  const isFinalMove = moveIndex === moveHistory.length - 1;
+
+  if (isFinalMove) {
+  	drawTerritories();
+  	
+  }
+  else {removeTerritoryMarks();}
+
   if (blackStonesCaptured || whiteStonesCaptured) {
   	printCaptures(captureHistory[positionIndex]);
   }
@@ -65,7 +79,6 @@ function getPositionIndex(moveIndex) {
 function updateButtons() {
 	prevMoveButton.disabled = move <= 0;
 	skipToStartButton.disabled = move <= 0;
-  nextMoveButton.disabled = move >= moveHistory.length - 2;
-  skipToEndButton.disabled = move >= moveHistory.length - 2;
+  nextMoveButton.disabled = move >= moveHistory.length - 1;
+  skipToEndButton.disabled = move >= moveHistory.length - 1;
 }
-		
