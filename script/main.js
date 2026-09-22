@@ -1,11 +1,11 @@
 //# Goban
 
-//### Config  *default*
+//### Config                     *default*
 const koRule = simpleKo;         // *simpleKo* | positionalKo | null
 const allowSelfCapture = false;  // *false* | true
 const komi = 6.5;                // *6.5*
 
-const coordsStyle = japanese;    // *european* | japanese
+const coordsStyle = european;    // *european* | japanese
 const theme = "kyoto";
 
 
@@ -69,43 +69,94 @@ function placeStone(x, y) {
 }
 
 function nextPlayer() {
-  currentPlayer = (currentPlayer === "black")? "white": "black";
+  currentPlayer = opponent();
   setGameMenu("game");
+}
+
+function opponent() {
+  return (currentPlayer === "black")? "white": "black";
+}
+
+function undoStone() {
+  if (positionHistory.length <= 1) {return;}
+
+  moveHistory.pop();
+  positionHistory.pop();
+  captureHistory.pop();
+
+  grid = copyGrid(positionHistory.at(-1));
+  const captures = captureHistory.at(-1);
+
+  blackStonesCaptured = captures.black;
+  whiteStonesCaptured = captures.white;
+  updateCapturesDisplay();
+
+  drawStones();
+  hidePreview();
+
+  move -= 1;
+  passed = false;
+  currentPlayer = opponent();
+
+  const lastMove = moveHistory[moveHistory.length - 1];
+
+  if (lastMove?.type === "play") {
+    const [x, y] = lastMove.place;
+    markLastMove(x, y);
+  }
+  info.innerHTML = "";
 }
 
 
 //### Pass, Resign
-passButton.onclick = () => {
+function pass() {
   moveHistory.push({
     player:currentPlayer, type:"pass",
   })
   if (!passed) {
     passed = true;
-    info.innerHTML = `${capitalize(currentPlayer)} passed`;
+    print(`${capitalize(currentPlayer)} passed`);
     move += 1;
     nextPlayer();
   }
   else {
-    info.innerHTML =
-      `${capitalize(currentPlayer)} passed. Game over`;
+    print(`${capitalize(currentPlayer)} passed. Game over`);
     move += 1;
     scoreGame();
   }
 }
 
-resignButton.onclick = () => {setGameMenu("resign")}
-resignCancelButton.onclick = () => {setGameMenu("game")}
+function undoPass() {
+  if (moveHistory.length === 0) {return;}
+  const lastMove = moveHistory[moveHistory.length - 1];
+  if (lastMove.type !== "pass") {return;}
 
-resignConfirmButton.onclick = () => {
+  moveHistory.pop();
+  move -= 1;
+  currentPlayer = lastMove.player;
+
+  const prevMove = moveHistory[moveHistory.length - 1];
+  passed = prevMove?.type === "pass";
+
+  info.innerHTML = "";
+}
+
+passButton.onclick = pass;
+
+function resign() {
   resignation = true;
-  winner = (currentPlayer === "black")? "white": "black";
+  winner = opponent();
   moveHistory.push({
     player:currentPlayer, type:"resign",
   })
-  info.innerHTML = `${capitalize(currentPlayer)} resigned`;
+  print(`${capitalize(currentPlayer)} resigned`);
   move += 1;
   scoreGame();
 }
+
+resignButton.onclick = () => {setGameMenu("resign")}
+resignCancelButton.onclick = () => {setGameMenu("game")}
+resignConfirmButton.onclick = resign;
 
 
 //### New Game
@@ -135,11 +186,59 @@ function newGame() {
 newGameButton.onclick = newGame;
 
 
+//### Console
+function parseCoordinate(coordinate) {
+  coordinate = coordinate.toUpperCase();
+  const letters = "ABCDEFGHJKLMNOPQRST";
+
+  const match = coordinate.match(/^([A-T])(\d+)$/);
+  if (!match) {return [null, null];}
+
+  const x = letters.indexOf(match[1]);
+  const y = size - Number(match[2]);
+
+  if (x < 0 || x >= size || y < 0 || y >= size) {
+    return [null, null];
+  }
+  return [x, y];
+}
+
+function place(coords) {
+  const [x, y] = parseCoordinate(coords);
+
+  if (x === null || y === null) {
+    console.log(`Invalid coordinates: ${coords}`);
+    return;
+  }
+  placeStone(x, y);
+}
+
+function undo() {
+  if (moveHistory.length === 0) {return;}
+
+  const lastMove = moveHistory[moveHistory.length - 1];
+  if (lastMove.type === "play") {undoStone();}
+  else if (lastMove.type === "pass") {undoPass();}
+}
+
+
 //### Display
 info.innerHTML = "";
 
 blackStonesCaptDisplay.innerHTML = "";
 whiteStonesCaptDisplay.innerHTML = "";
+
+function print(text) {
+  info.innerHTML = text;
+  console.log(text);
+}
+
+function updateCapturesDisplay() {
+  printCaptures({
+    black: blackStonesCaptured,
+    white: whiteStonesCaptured
+  });
+}
 
 function printCaptures(captures) {
   blackStonesCaptDisplay.innerHTML = `○ captured: ${captures.black}`;

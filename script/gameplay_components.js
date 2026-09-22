@@ -97,13 +97,12 @@ function isCaptured(x, y) {
 }
 
 function capture(x, y, count=true) {
-  const opponent = currentPlayer === "black"? "white": "black";
   for (const [nx, ny] of getNeighbors(x, y)) {
-    if (grid[ny][nx] !== opponent) {continue}
+    if (grid[ny][nx] !== opponent()) {continue}
 
     if (isCaptured(nx, ny)) {
     	const capturedStones = captureGroup(nx, ny);
-      if (count) {addCaptures(capturedStones, opponent)}
+      if (count) {addCaptures(capturedStones, opponent())}
     }
   }
   if (count) {
@@ -138,12 +137,7 @@ function captureGroup(x, y) {
 function addCaptures(stones, color, updateDisplay=true) {
   if (color === "black") {blackStonesCaptured += stones;}
   else if (color === "white") {whiteStonesCaptured += stones;}
-  if (updateDisplay) {
-    printCaptures({
-      black: blackStonesCaptured,
-      white: whiteStonesCaptured,
-    });
-  }
+  if (updateDisplay) {updateCapturesDisplay();}
 }
 
 
@@ -158,15 +152,13 @@ function simpleKo() {
 
 function positionalKo() {
   for (position of positionHistory) {
-    if (gridsEqual(grid, position)) {return true}
+    if (gridsEqual(grid, position)) {return true;}
   }
   return false;
 }
 
 function isLegal(x, y) {
-  if (grid[y][x] !== null) {return false}
-
-  const opponent = currentPlayer === "black"? "white": "black";
+  if (grid[y][x] !== null) {return false;}
   
   const savedGrid = copyGrid(grid);
 

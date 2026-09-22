@@ -6,7 +6,7 @@ function review() {
 
 	scoreInfo =`
 		Black: ${score.black},
-		White: ${score.white} (${score.white - score.komi} + ${score.komi})
+		White: ${score.white-score.komi} + ${score.komi} = ${score.white}
 		 – ${capitalize(winner)} wins`;
   info.innerHTML = scoreInfo;
 
