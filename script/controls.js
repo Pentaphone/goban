@@ -21,7 +21,8 @@ const resignCancelButton = document.getElementById("resignCancel");
 const resignConfirmButton = document.getElementById("resignConfirm");
 
 // Score Mode
-const scoreConfirmButton = document.getElementById("ScoreConfirm");
+const continueGameButton = document.getElementById("continueGame");
+const scoreConfirmButton = document.getElementById("scoreConfirm");
 
 // Review Mode
 const skipToStartButton = document.getElementById("start");

@@ -93,6 +93,23 @@ function calculateScore(komi = 6.5) {
 	return {black: black, white: white, komi: komi};
 }
 
+function continueGame() {
+	programMode = "play";
+  setGameMenu("game");
+
+  blackStonesCaptured = captureHistory.at(-1).black;
+  whiteStonesCaptured = captureHistory.at(-1).white;
+  updateCapturesDisplay();
+
+  clearDeadStones();
+  removeTerritoryMarks();
+  drawStones();
+
+  currentPlayer = opponent();
+}
+
+continueGameButton.onclick = continueGame;
+
 scoreConfirmButton.onclick = () => {
 	score = calculateScore(komi);
 	review();
