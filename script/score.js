@@ -2,7 +2,7 @@
 
 function scoreGame() {
 	programMode = "score";
-  setGameMenu("score");
+  if (!loadingGame) {setGameMenu("score");}
 
   scoringGrid = copyGrid(grid);
   deadStones = new Set();
@@ -90,7 +90,12 @@ function calculateScore(komi = 6.5) {
 		+ komi;
 
 	if (!resignation) {winner = white > black? "white": "black";}
-	return {black: black, white: white, komi: komi};
+	return {
+    black: black, white: white,
+    komi: komi,
+    resignation: resignation,
+    winner: winner,
+  };
 }
 
 function continueGame() {
@@ -111,6 +116,7 @@ function continueGame() {
 continueGameButton.onclick = continueGame;
 
 scoreConfirmButton.onclick = () => {
+  gameOver = true;
 	score = calculateScore(komi);
 	review();
 }

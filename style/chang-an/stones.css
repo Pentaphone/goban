@@ -14,13 +14,13 @@
 .stone.black {background: #111111}
 .stone.white {background: #eeeeee}
 
-.preview {
+.preview.black, .dead.black {
   opacity: 0.5;
   pointer-events: none;
 }
 
-.dead {
-  opacity: 0.5;
+.preview.white, .dead.white {
+  opacity: 0.6;
   pointer-events: none;
 }
 

@@ -51,9 +51,8 @@ function isHoshi(x, y) {
     [dist, last - dist],
     [last - dist, dist],
     [last - dist, last - dist],
-    center,
+    center
   ];
-
   return points.some(([px, py]) => px === x && py === y);
 }
 

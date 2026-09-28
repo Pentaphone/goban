@@ -4,16 +4,24 @@ function review() {
   programMode = "review";
   setGameMenu("review");
 
-	scoreInfo =`
-		Black: ${score.black},
-		White: ${score.white-score.komi} + ${score.komi} = ${score.white}
-		 – ${capitalize(winner)} wins`;
-  info.innerHTML = scoreInfo;
-
+  printScore();
   drawStones();
   drawDeadStones();
 
   updateButtons();
+}
+
+function printScore() {
+  scoreInfo = `
+  Black: ${score.black},
+  White: ${score.white-score.komi} + ${score.komi} = ${score.white}
+   – ${capitalize(winner)} wins`;
+  if (resignation) {
+    info.innerHTML = `${capitalize(player)} resigned | `;
+  } else {
+    info.innerHTML = "";
+  }
+  info.innerHTML += scoreInfo;
 }
 
 prevMoveButton.onclick = () => {
@@ -63,7 +71,12 @@ function showMove(moveIndex) {
   if (isFinalMove) {
   	drawDeadStones();
   	drawTerritories();
-  	info.innerHTML += " | " + scoreInfo;
+    if (moveToShow.type === "resign") {
+  	  info.innerHTML += " | " + scoreInfo;
+    } else {
+      info.innerHTML = scoreInfo;
+    }
+    if (sgfResult) {printSGFResult(sgfResult);}
   }
   else {removeTerritoryMarks();}
 

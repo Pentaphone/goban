@@ -3,26 +3,25 @@
 //### Config                     *default*
 const koRule = simpleKo;         // *simpleKo* | positionalKo | null
 const allowSelfCapture = false;  // *false* | true
-const komi = 6.5;                // *6.5*
+let   komi = 6.5;                // *6.5*
 
-const coordsStyle = european;    // *european* | japanese
+const recordDate = true;
+
+const coordsStyle = european;    // *european* | japanese | sgfCoords
 const theme = "kyoto";
 
 
 //### Constants, Variables
-const info = document.getElementById("info");
-
 const board = document.getElementById("board");
 
-const blackStonesCaptDisplay = document.getElementById("blackStones")
-const whiteStonesCaptDisplay = document.getElementById("whiteStones")
-const coordsDisplay = document.getElementById("coords")
-
 let   programMode = "play";
+let   loadingGame = false;
 
 let   size = Number(sizeSelector.value);
 let   center;
 let   grid = newGrid();
+
+let   date;
 
 let   moveHistory = [];
 let   positionHistory = [copyGrid(grid)];
@@ -33,11 +32,15 @@ let   captureHistory = [{black: 0, white: 0}];
 let   passed = false;
 let   resignation = false;
 
+let   gameOver = false;
 let   scoringGrid;
 let   deadStones = new Set();
 let   score = {};
 let   winner = null;
 let   scoreInfo = "";
+let   sgfResult = "";
+
+let   saved = false;
 
 let   move = 0;
 let   position = 0;
@@ -70,7 +73,7 @@ function placeStone(x, y) {
 
 function nextPlayer() {
   currentPlayer = opponent();
-  setGameMenu("game");
+  if (!loadingGame) {setGameMenu("game");}
 }
 
 function opponent() {
@@ -106,7 +109,7 @@ function undoStone() {
     const [x, y] = prevMove.place;
     markLastMove(x, y);
   }
-  else if (prevMove?.type === "pass") {
+  else if (prevMove?.type === "pass" && !loadingGame) {
     print(`${capitalize(prevMove.player)} passed`)
   }
 }
@@ -119,14 +122,18 @@ function pass() {
   })
   if (!passed) {
     passed = true;
-    print(`${capitalize(currentPlayer)} passed`);
+    if (programMode === "play" && !loadingGame) {
+      print(`${capitalize(currentPlayer)} passed`);
+    }
     move += 1;
     nextPlayer();
   }
   else {
-    print(`${capitalize(currentPlayer)} passed. Game over`);
+    if (programMode === "play" && !loadingGame) {
+      print(`${capitalize(currentPlayer)} passed. Game over`);
+    }
     move += 1;
-    scoreGame();
+    if (programMode === "play") {scoreGame();}
   }
 }
 
@@ -188,17 +195,18 @@ resignConfirmButton.onclick = resign;
 
 
 //### New Game
-function newGame() {
-  size = Number(sizeSelector.value);
+function newGame(boardSize) {
+  size = Number(boardSize);
   grid = newGrid();
   drawBoard();
 
   info.innerHTML = "";
   blackStonesCaptDisplay.innerHTML = "";
   whiteStonesCaptDisplay.innerHTML = "";
-  setGameMenu("game");
+  if (!loadingGame) {setGameMenu("start");}
 
   programMode = "play";
+  if (recordDate) {date = new Date();}
   move = 0;
   moveHistory = [{type:"start"}];
   positionHistory = [copyGrid(grid)];
@@ -207,56 +215,24 @@ function newGame() {
   whiteStonesCaptured = 0;
   passed = false;
   resignation = false;
+  gameOver = false;
+
+  saved = false;
+  saveGameButton.disabled = false;
+  sgfResult = "";
 
   currentPlayer = "black";
 }
 
-newGameButton.onclick = newGame;
+newGameButton.onclick = () => newGame(sizeSelector.value);
 
 
-//### Display
-info.innerHTML = "";
+setGameMenu("start");
 
-blackStonesCaptDisplay.innerHTML = "";
-whiteStonesCaptDisplay.innerHTML = "";
+if (recordDate) {date = new Date();}
 
-function print(text) {
-  info.innerHTML = text;
-  console.log(text);
-}
-
-function updateCapturesDisplay() {
-  printCaptures({
-    black: blackStonesCaptured,
-    white: whiteStonesCaptured
-  });
-}
-
-function printCaptures(captures) {
-  blackStonesCaptDisplay.innerHTML = `○ captured: ${captures.black}`;
-  whiteStonesCaptDisplay.innerHTML = `● captured: ${captures.white}`;
-}
-
-function getCoords(x, y) {return coordsStyle(x, y);}
-
-
-// Coords Styles
-function european(x, y) {
-  const cols = "ABCDEFGHJKLMNOPQRST";
-  const col = cols[x];
-  const row = size - y;
-  return `${col}${row}`;
-}
-
-function japanese(x, y) {
-  const kanjiNumbers = [
-    "一", "二", "三", "四", "五", "六", "七", "八", "九", "十",
-    "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九"
-  ];
-  const col = x + 1;
-  const row = kanjiNumbers[y];
-  return `${col}${row}`;
-}
+moveHistory.push({type:"start"});
+drawBoard();
 
 
 //### Theme
@@ -268,6 +244,4 @@ function setTheme(theme) {
 }
 setTheme(theme);
 
-moveHistory.push({type:"start"});
-drawBoard();
 

@@ -3,13 +3,20 @@
 const sizeSelector = document.getElementById("boardSize");
 const newGameButton = document.getElementById("new");
 
+const saveGameButton = document.getElementById("save");
+const loadGameButton = document.getElementById("load");
+const saveSGFButton = document.getElementById("saveSGFFile");
+const loadSGFButton = document.getElementById("loadSGFFile");
+
 
 //### Game Controls
 const gameMenuModes = {
+	start: document.getElementById("startMode"),
   game: document.getElementById("gameMode"),
   resign: document.getElementById("resignMode"),
   score: document.getElementById("scoreMode"),
   review: document.getElementById("reviewMode"),
+  loadGame: document.getElementById("gameArchiveMode")
 };
 
 // Game Mode
@@ -30,6 +37,12 @@ const prevMoveButton = document.getElementById("prev");
 const nextMoveButton = document.getElementById("next");
 const skipToEndButton = document.getElementById("end");
 
+// Game Archive Mode
+constPrevGameButton = document.getElementById("prevGame");
+constNexGameButton = document.getElementById("nextGame");
+reviewGameButton = document.getElementById("reviewGame");
+
+
 // Mode Control
 let gameMenu = null;
 
@@ -40,5 +53,3 @@ function setGameMenu(mode) {
 	gameMenu = mode;
 	gameMenuModes[mode].classList.add("shown");
 }
-
-setGameMenu("game");

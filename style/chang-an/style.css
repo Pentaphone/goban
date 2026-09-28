@@ -21,10 +21,15 @@ h1 {
   width: 20px
 }
 
+.vertSpacing {
+  height: 10px
+}
+
 
 /* Control Elements */
 button {
-  margin-left: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
   background: #252525;
   color: #eeeeee;
 
@@ -32,7 +37,7 @@ button {
   border-radius: 5px;
 
   padding: 6px 20px;
-  font-size: 16px;
+  font-size: 15px;
 
   cursor: pointer;
 }
@@ -44,6 +49,8 @@ button:disabled {
 }
 
 select {
+  margin-left: 5px;
+  margin-right: 5px;
   padding: 6px 16px;
 
   background: #252525;
@@ -52,45 +59,98 @@ select {
   border: 1px solid #555;
   border-radius: 5px;
 
-  font-size: 16px;
+  font-size: 15px;
 }
 select:hover {
   background: #333;
 }
 
 
-/* Controls, Info */
-.controls {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  margin-bottom: 20px;
+/* Dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
 }
 
-#info {
-  height: 1rem;
-  margin-bottom: 20px;
+.dropdown-button {
+  margin-left: 10px;
 
-  text-align: center;
-  font-weight: bold;
+  background: #252525;
+  color: #eeeeee;
+
+  border: 1px solid #555;
+  border-radius: 5px;
+
+  padding: 6px 20px;
+  font-size: 15px;
+
+  cursor: pointer;
 }
 
-#captures-coords {
-  width: min(90vw, 500px);
-  height: 1rem;
-  margin-bottom: 20px;
-
-  display: flex;
-  justify-content: space-evenly;
+.dropdown-button:hover {
+  background: #333;
 }
 
-#blackStones, #whiteStones {
-  width: 100 px;
+.dropdown-menu {
+  display: none;
+
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 10px;
+
+  min-width: 200px;
+  padding: 4px;
+
+  background: #252525;
+  border: 1px solid #555;
+  border-radius: 5px;
+
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+
+  z-index: 999;
 }
 
-#coords {
-  width: 54px;
-  text-align: center;
+.dropdown-menu button {
+  width: 100%;
+  margin-left: 0;
+  padding: 6px 12px;
+
+  background: transparent;
+  border: none;
+  border-radius: 3px;
+
+  text-align: left;
 }
 
+.dropdown.open .dropdown-menu {
+  display: block;
+}
+
+.file-button {
+  display: block;
+
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+
+  padding: 7px 12px;
+
+  background: transparent;
+  color: #eeeeee;
+
+  border: none;
+  border-radius: 3px;
+
+  text-align: left;
+  font-size: 15px;
+
+  cursor: pointer;
+}
+
+.file-button:hover {
+  background: #333;
+}
+
+#loadSGFFile {
+  display: none;
+}

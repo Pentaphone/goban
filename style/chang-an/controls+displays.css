@@ -1,0 +1,40 @@
+/* Controls, Info */
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+#more {
+  padding: 6px 13px;
+}
+
+#info {
+  height: 1rem;
+  margin-bottom: 20px;
+
+  text-align: center;
+  font-weight: bold;
+}
+
+#captures-coords {
+  width: min(90vw, 500px);
+  height: 1rem;
+  margin-bottom: 20px;
+
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#blackStones, #whiteStones {
+  width: 100 px;
+}
+
+#coords {
+  width: 54px;
+  text-align: center;
+}

@@ -18,7 +18,17 @@
     <option value="19" selected>19 × 19</option>
   </select>
   <button id="new">New Game</button>
-  </div>
+  <div class="spacing"></div>
+  <div class="dropdown">
+  <button id="more" class="dropdown-button">...</button>
+  <div class="dropdown-menu">
+    <button id="save" disabled=true>Save Game</button>
+    <button id="load" disabled=true>Load Game</button>
+    <button id="saveSGFFile">Save Game File (SGF)</button>
+    <label for="loadSGFFile" class="file-button">Load Game File (SGF)</label>
+    <input type="file" id="loadSGFFile" accept=".sgf">
+  </div></div></div>
+  <div class="vertSpacing"></div>
 
   <div id="info">_</div>
 
@@ -28,8 +38,13 @@
     <div id="coords"></div>
     <div id="whiteStones"></div>
   </div>
+  <div class="vertSpacing"></div>
 
-  <div id ="gameMenu">
+  <div id="gameMenu" class="controls">
+    <div class="controls mode" id="startMode">
+    <button id="edit" disabled=true>Edit</button>
+    </div>
+
     <div class="controls mode" id="gameMode">
     <button id="pass">Pass</button>
     <button id="resign">Resign</button>
@@ -44,7 +59,7 @@
     <div class="controls mode" id="scoreMode">
     Select dead groups
     <div class="spacing"></div>
-    <button id="continueGame">Continue game</button>
+    <button id="continueGame">Continue Game</button>
     <button id="scoreConfirm">Confirm</button>
     </div>
 
@@ -54,8 +69,19 @@
     <button id="next">▶</button>
     <button id="end">⏭</button>
     <div class="spacing"></div>
+    <button id="edit" disabled=true>Edit</button>
+    </div>
+
+    <div class="controls mode" id="newGameMode">
     <button id="edit">Edit</button>
     </div>
+
+    <div class="controls mode" id="gameArchiveMode">
+    <button id="prevGame">⏮</button>
+    <button id="reviewGame">Review Game</button>
+    <button id="nextGame">⏭</button>
+    </div>
+
 
   </div>
 
@@ -65,6 +91,8 @@
 <!-- Style, Themes -->
 <link data-theme="chang-an" rel="stylesheet"
   href="style/chang-an/style.css">
+<link data-theme="chang-an" rel="stylesheet"
+  href="style/chang-an/controls+displays.css">
 <link data-theme="chang-an" rel="stylesheet"
   href="style/chang-an/board.css">
 <link data-theme="chang-an" rel="stylesheet"
@@ -80,18 +108,24 @@
 <link data-theme="kyiv" rel="stylesheet"
   href="style/kyiv/stones.css">
 
-<link rel="stylesheet" href="style/control_modes.css">
+<link rel="stylesheet" href="style/menu_control.css">
 
 
 <!-- Script -->
 <script src="script/lib/write.js"></script>
+<script src="script/lib/user_interface.js"></script>
 
 <script src="script/controls.js"></script>
+<script src="script/display.js"></script>
 <script src="script/console.js"></script>
+
 <script src="script/board.js"></script>
 <script src="script/stones.js"></script>
 <script src="script/gameplay_components.js"></script>
 <script src="script/territory.js"></script>
 <script src="script/score.js"></script>
 <script src="script/review.js"></script>
+<script src="script/game_files.js"></script>
+<script src="script/game_archive.js"></script>
+
 <script src="script/main.js"></script>
